@@ -1,6 +1,6 @@
 // IDs dos seus Google Docs
 const docIds = [
-   '1mrN48I3k7ybmhR0xxx-05qo-A0yng8RsPZ2d-FiuZ_w',
+    '1mrN48I3k7ybmhR0xxx-05qo-A0yng8RsPZ2d-FiuZ_w',
     '1SZKkyLQ1121qyOS9Z4idEyK3touhw_ts0xLL7GAlaNU',
     '1xAbpqYCx1J7NX982S4gJmCJE2xJBlshmI-CCp1adDUg',
     '1TxTePk4AdPv-P_0qbqERTrKhQjoiupg5J25jJT02mNM',
@@ -77,6 +77,9 @@ function handleAuthClick() {
 
 // Função para carregar links de múltiplos documentos
 function loadLinksFromDocs() {
+    const fileList = document.getElementById('fileList');
+    fileList.innerHTML = '';  // Limpa a lista antes de recarregar
+
     docIds.forEach(docId => {
         const url = `https://docs.googleapis.com/v1/documents/${docId}`;
 
@@ -84,21 +87,26 @@ function loadLinksFromDocs() {
             path: url
         }).then(response => {
             const content = response.result.body.content;
-            const fileList = document.getElementById('fileList');
 
             // Iterar sobre o conteúdo do Google Docs
             content.forEach(element => {
                 if (element.paragraph && element.paragraph.elements) {
                     element.paragraph.elements.forEach(el => {
-                        if (el.textRun && el.textRun.content.includes('http')) {
-                            const linkText = el.textRun.content.trim();
-                            const urlMatch = linkText.match(/\bhttps?:\/\/\S+/gi);
+                        if (el.textRun) {
+                            const text = el.textRun.content.trim();
 
-                            if (urlMatch) {
+                            // Verificar se o texto contém o formato específico "Nome do arquivo - tamanho: link"
+                            const linkPattern = /(.+?) - tamanho: (http[s]?:\/\/[^\s]+)/;
+                            const match = text.match(linkPattern);
+
+                            if (match) {
+                                const fileName = match[1];  // Nome do arquivo
+                                const fileLink = match[2];  // Link
+
                                 const li = document.createElement('li');
                                 const a = document.createElement('a');
-                                a.href = urlMatch[0];
-                                a.textContent = linkText;
+                                a.href = fileLink;
+                                a.textContent = fileName;  // Exibir o nome do arquivo e ocultar o link
                                 li.appendChild(a);
                                 fileList.appendChild(li);
                             }
