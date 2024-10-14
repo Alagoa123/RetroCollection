@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesquisar Roms</title>
+    <title>Pesquisar Arquivos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Pesquisar Roms</h1>
+        <h1>Pesquisar Arquivos</h1>
         <!-- Botão de login Google -->
         <button id="login-button" onclick="handleAuthClick()">Login com Google</button>
         <!-- Campo de pesquisa -->
@@ -20,9 +20,8 @@
     </div>
 
     <!-- Biblioteca de API do Google -->
-    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <!-- Scripts personalizados -->
     <script src="scripts.js"></script>
 </body>
 </html>
-
