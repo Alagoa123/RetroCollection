@@ -123,6 +123,9 @@ function filterLinks() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
     const links = document.getElementById('fileList').getElementsByTagName('li');
 
+    // Log para depuração
+    console.log("Filtro aplicado:", searchInput);
+
     for (let i = 0; i < links.length; i++) {
         const link = links[i].getElementsByTagName('a')[0];
         const textValue = link.textContent || link.innerText;
