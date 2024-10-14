@@ -1,8 +1,18 @@
 // IDs dos seus Google Docs
 const docIds = [
-    'GOOGLE_DOCS_ID_1',  // Substitua com o ID do primeiro Google Docs
-    'GOOGLE_DOCS_ID_2',  // Substitua com o ID do segundo Google Docs
-    'GOOGLE_DOCS_ID_3'   // Substitua com o ID do terceiro Google Docs
+   '1mrN48I3k7ybmhR0xxx-05qo-A0yng8RsPZ2d-FiuZ_w',
+    '1SZKkyLQ1121qyOS9Z4idEyK3touhw_ts0xLL7GAlaNU',
+    '1xAbpqYCx1J7NX982S4gJmCJE2xJBlshmI-CCp1adDUg',
+    '1TxTePk4AdPv-P_0qbqERTrKhQjoiupg5J25jJT02mNM',
+    '1DvP8JOD-m5DqLuJUa9GSQ70kHE8uxSKjqvQY3ALQ51Q',
+    '178dkk-LVAegOWRj2c7XX-lAO973KENo4RstAb9uyrZU',
+    '1VbMYGP7F8B-4V0w90NcLcaSWMR-YGuJVv2hgwesjOeU',
+    '1Mny_mvylOR81W5-xLUgqmHkd54YGI3nBTc6638LqEWo',
+    '11OrsN8cJ936B0KXfQBdKkzuh1i_xUZ81LnyH95KrclY',
+    '1EwWBUGUUk9GT_mfz6WteykTcbrkt7JWt508xrEc2Q-c',
+    '1-agPCQV4Pm6QXms93niuzHJz8HfVLKyowchPX4ItzhA',
+    '1WEHM1OMXCaceJqp9fHVPScLm3RIU7D6XpPtSS4YePNo',
+    '138u3_aaUi7w0sPeVyQ_0C2HG1c-fKTOM3DWE-fhG15I'
 ];
 
 // Suas credenciais do Google OAuth
