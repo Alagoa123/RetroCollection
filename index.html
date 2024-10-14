@@ -9,12 +9,20 @@
 <body>
     <div class="container">
         <h1>Pesquisar Roms</h1>
+        <!-- Botão de login Google -->
+        <button id="login-button" onclick="handleAuthClick()">Login com Google</button>
+        <!-- Campo de pesquisa -->
         <input type="text" id="searchInput" onkeyup="filterLinks()" placeholder="Pesquisar arquivos...">
+        <!-- Lista onde os links serão exibidos -->
         <ul id="fileList">
             <!-- Os links serão carregados aqui dinamicamente -->
         </ul>
     </div>
 
+    <!-- Biblioteca de API do Google -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <!-- Scripts personalizados -->
     <script src="scripts.js"></script>
 </body>
 </html>
+
