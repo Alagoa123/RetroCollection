@@ -4,132 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RetroCollection Spotify Convert</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-        #main, #downloadSection {
-            display: none;
-            margin-top: 20px;
-        }
-        input, button {
-            padding: 10px;
-            font-size: 16px;
-            margin: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <h2>RetroCollection Spotify Convert</h2>
-    
-    <!-- Formulário de login -->
-    <div id="loginSection">
-        <p>Digite seu e-mail para acessar:</p>
-        <input type="email" id="emailInput" placeholder="Seu e-mail">
-        <button onclick="checkEmail()">Entrar</button>
-        <p id="loginMessage"></p>
+    <div id="login-container">
+        <h1>Login</h1>
+        <input type="email" id="email" placeholder="Digite seu e-mail">
+        <button id="login-btn">Entrar</button>
     </div>
 
-    <!-- Interface principal -->
-    <div id="main">
-        <p>Insira a URL da playlist do Spotify:</p>
-        <input type="text" id="playlistURL" placeholder="Cole a URL aqui">
-        <button onclick="getPlaylist()">Buscar Músicas</button>
-        
-        <div id="downloadSection">
-            <h3>Músicas Encontradas:</h3>
-            <ul id="songList"></ul>
+    <div id="main-app" style="display: none;">
+        <h1>RetroCollection Spotify Convert</h1>
+        <div id="tabs">
+            <button class="tab-btn active" data-tab="download">Baixar Músicas</button>
+            <button class="tab-btn" data-tab="add-cover">Adicionar Capas</button>
+        </div>
+
+        <div id="download-tab" class="tab-content">
+            <label for="url">URL da Playlist do Spotify:</label>
+            <input type="text" id="url" placeholder="Cole a URL da playlist">
+
+            <label for="directory">Diretório de Download:</label>
+            <input type="text" id="directory" placeholder="Selecione o diretório">
+            <button id="browse-btn">Selecionar Diretório</button>
+
+            <label>Formato de Download:</label>
+            <div>
+                <input type="radio" id="mp3" name="format" value="mp3" checked>
+                <label for="mp3">MP3</label>
+                <input type="radio" id="m4a" name="format" value="m4a">
+                <label for="m4a">M4A</label>
+            </div>
+
+            <button id="download-btn">Baixar Músicas</button>
+        </div>
+
+        <div id="add-cover-tab" class="tab-content" style="display: none;">
+            <h2>Adicionar Capas aos MP3</h2>
+            <button id="select-mp3-btn">Selecionar Arquivos MP3</button>
         </div>
     </div>
 
-    <script>
-        const DOCUMENT_ID = "1lwlHM7KP6x5TQ8rSMkBknnXYIO4TD7ebcMNM0s4foqU";
-        const DOCS_URL = `https://docs.google.com/document/d/${DOCUMENT_ID}/export?format=txt`;
-
-        function checkEmail() {
-            const email = document.getElementById("emailInput").value;
-            fetch(DOCS_URL)
-                .then(response => response.text())
-                .then(text => {
-                    if (text.includes(email)) {
-                        document.getElementById("loginSection").style.display = "none";
-                        document.getElementById("main").style.display = "block";
-                    } else {
-                        document.getElementById("loginMessage").innerText = "E-mail não encontrado!";
-                    }
-                })
-                .catch(error => {
-                    console.error("Erro ao acessar Google Docs:", error);
-                });
-        }
-
-        function getPlaylist() {
-            const playlistURL = document.getElementById("playlistURL").value;
-            if (!playlistURL) {
-                alert("Por favor, insira uma URL válida!");
-                return;
-            }
-            
-            // Extrai o ID da playlist do link
-            const playlistID = playlistURL.split("/playlist/")[1]?.split("?")[0];
-            if (!playlistID) {
-                alert("URL inválida! Insira o link completo da playlist.");
-                return;
-            }
-
-            const CLIENT_ID = "6c579e431afa4a778b8dadd65c57cd5a";
-            const CLIENT_SECRET = "8a5c9d8c92e448cab43a60f04922a808";
-
-            // Obtém token de acesso ao Spotify
-            fetch("https://accounts.spotify.com/api/token", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "Authorization": "Basic " + btoa(CLIENT_ID + ":" + CLIENT_SECRET)
-                },
-                body: "grant_type=client_credentials"
-            })
-            .then(response => response.json())
-            .then(data => {
-                const token = data.access_token;
-                fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
-                    headers: { "Authorization": `Bearer ${token}` }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    displaySongs(data.items);
-                })
-                .catch(error => console.error("Erro ao buscar playlist:", error));
-            })
-            .catch(error => console.error("Erro ao obter token do Spotify:", error));
-        }
-
-        function displaySongs(songs) {
-            const songList = document.getElementById("songList");
-            songList.innerHTML = "";
-
-            songs.forEach(song => {
-                const track = song.track;
-                const songName = track.name;
-                const artistName = track.artists[0].name;
-                const query = encodeURIComponent(`${songName} ${artistName}`);
-                
-                // Link de busca no YouTube para download manual
-                const youtubeSearchURL = `https://www.youtube.com/results?search_query=${query}`;
-                
-                const listItem = document.createElement("li");
-                listItem.innerHTML = `<strong>${songName}</strong> - ${artistName} 
-                                      <a href="${youtubeSearchURL}" target="_blank">[Baixar]</a>`;
-                songList.appendChild(listItem);
-            });
-
-            document.getElementById("downloadSection").style.display = "block";
-        }
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
